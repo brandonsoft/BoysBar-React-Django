@@ -1,0 +1,68 @@
+To select multiple values from another table using the `MultiSelectField` in Django, you can use the `ModelMultipleChoiceField` form field and the `CheckboxSelectMultiple` widget.
+
+Here's an example of how to use `ModelMultipleChoiceField` and `CheckboxSelectMultiple` with `MultiSelectField`:
+
+1. In your `models.py` file, define the model that has the choices:
+
+   ```python
+   class Tag(models.Model):
+       name = models.CharField(max_length=50)
+   
+       def __str__(self):
+           return self.name
+   
+   class Item(models.Model):
+       name = models.CharField(max_length=50)
+       tags = models.ManyToManyField(Tag)
+   
+       def __str__(self):
+           return self.name
+   ```
+   
+   In this example, we have two models `Tag` and `Item`. The `Item` model has a `ManyToManyField` relationship with the `Tag` model.
+
+2. In your form, create the form field using `ModelMultipleChoiceField` and specify `CheckboxSelectMultiple` as the widget:
+
+   ```python
+   from django import forms
+   from multiselectfield import MultiSelectField
+   from myapp.models import Item, Tag
+   
+   class ItemForm(forms.ModelForm):
+       tags = forms.ModelMultipleChoiceField(required=False,
+                                             widget=forms.CheckboxSelectMultiple,
+                                             queryset=Tag.objects.all())
+   
+       class Meta:
+           model = Item
+           fields = ['name', 'tags']
+           widgets = {
+               'name': forms.TextInput(attrs={'class': 'form-control'}),
+           }
+   ```
+   
+   In this example, we have created the `tags` field using `ModelMultipleChoiceField` and set `CheckboxSelectMultiple` as the widget to allow the user to select multiple tags for the `Item`. The `queryset` parameter specifies the available choices for the form field.
+
+3. In your view, process the form data and save the form as usual:
+
+   ```python
+   from django.shortcuts import render, redirect
+   from myapp.forms import ItemForm
+   
+   def create_item(request):
+       form = ItemForm(request.POST or None)
+   
+       if form.is_valid():
+           item = form.save(commit=False)
+           tags = form.cleaned_data.get('tags')
+           item.save()
+           item.tags.add(*tags)
+           return redirect('item_list')
+   
+       context = {'form': form}
+       return render(request, 'my_template.html', context)
+   ```
+   
+   In this example, we have created an `ItemForm` instance from the form data and saved it to the database. We have also extracted the selected tags from the form and added them to the `Item` object.
+   
+With these changes, your users will now be able to select multiple tags for an `Item` using the `MultiSelectField`, `ModelMultipleChoiceField`, and `CheckboxSelectMultiple`.

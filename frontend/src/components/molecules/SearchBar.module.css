@@ -1,0 +1,17 @@
+.container {
+    max-width: 1080px;
+    margin: 15px auto;
+    padding: 10px !important;
+}
+
+.input_group {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+@media screen and (max-width: 767px) {
+    .container {
+        
+    }
+}

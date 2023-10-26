@@ -1,0 +1,14 @@
+.container {
+    max-width: 1080px;
+    margin: 0 auto !important;
+    padding: 10px !important;
+    background-color: #AC36CE;
+    margin: 20px 0;
+}
+
+.container h4 {
+    color: #ffffff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.6rem;
+    text-align: center;
+}

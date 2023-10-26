@@ -1,0 +1,15 @@
+.container {
+    /* background: linear-gradient(122deg, rgba(205, 80, 241, 0.99) 30.62%, rgba(207, 106, 236, 0.99) 100%); */
+    background-color: rgba(207, 106, 236, 0.99);
+    background-image: url('../public/images/cloud.png'), url('../public/images/cloud.png'), url('../public/images/sun.png'), url('../public/images/cloud.png');
+    background-attachment: scroll;
+    background-position: -5% 15%, 5% 45%, 105% 15%, 85% 35%;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+}
+
+@media screen and (max-width: 767px) {
+    .container {
+        background-color: #F4DEFB !important;
+        background-position: -5% 15%, 5% 35%, 120% 15%, 85% 35%;
+    }
+}

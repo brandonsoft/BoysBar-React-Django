@@ -1,0 +1,39 @@
+/*-------- signup --------------*/
+.form_container {
+    padding: 20px;
+    margin: 40px !important;
+    border: none !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.16), 0 6px 30px 0 rgba(0, 0, 0, 0.15) !important;
+}
+
+.form_container .title {
+    margin-top: 15px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.form_container label {
+    margin-top: 10px;
+}
+
+.form_container input {
+    border-radius: 0 !important;
+}
+
+.signup_button {
+    width: 100%;
+    padding: 10px;
+    margin: 30px 0;
+    border-radius: 0 !important;
+}
+
+/*-------- mobile design ---------*/
+
+@media screen and (max-width: 767px) {
+    .form_container {
+        padding: 15px !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+}

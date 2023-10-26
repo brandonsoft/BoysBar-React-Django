@@ -1,0 +1,38 @@
+.container {
+    margin: 0;
+    padding: 0 10px 20px 10px !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.container img:hover {
+    filter: brightness(135%);
+}
+
+.title_bar {
+    padding: 10px !important;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.title_bar h5 {
+    color: #ffffff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1;
+}
+
+@media screen and (max-width: 767px) {
+    .container {
+        margin: 0;
+        padding: 0 15px 30px 15px !important;
+    }
+
+    .container img {
+        margin: 0 !important;
+    }
+}

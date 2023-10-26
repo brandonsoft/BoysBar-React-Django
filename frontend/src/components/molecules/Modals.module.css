@@ -1,0 +1,35 @@
+.modal_title {
+    width: 90% !important;
+    text-align: center;
+    font-weight: 900;
+}
+
+.modal_container:first-child {
+    border-top-width: 0px;
+}
+
+.category {
+    border-color: #c5c5c5 !important;
+    border-top: 1px solid;
+    margin-top: 15px !important;
+    padding: 5px 0 !important;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.category:first-child {
+    border-top-width: 0px !important;
+}
+
+.category_item {
+    padding: 5px 15px;
+}
+
+.checkbox {
+    width: 31px !important;
+    height: 31px !important;
+}
+
+.label {
+    padding: 8px 10px;
+}
