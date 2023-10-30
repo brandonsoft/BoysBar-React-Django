@@ -23,7 +23,7 @@ export const SelectPrefectureDialog = (props) => {
     const prefectures = useSelector(state => state.stores.prefectures);
 
     const [prefecture_list, setPrefecture_list] = useState([]);
-    const [currentPrefecture, setCurrentPrefecture] = useState(prefectures);
+    const [currentPrefectures, setCurrentPrefectures] = useState(prefectures);
     const [filter, setFilter] = useState([]);
     
     const fetchPrefecturelist = async() => {
@@ -41,28 +41,33 @@ export const SelectPrefectureDialog = (props) => {
     }
     
     useEffect(() => {
-        
         const fetchData = async () => {
             let result = await fetchPrefecturelist();
             setPrefecture_list(result);
         }
         fetchData();
-    }, []);
-
-    useEffect(() => {
-        setCurrentPrefecture(prefectures);
     }, [prefectures]);
 
     useEffect(() => {
+        setCurrentPrefectures(prefectures);
+    }, [prefectures]);
+
+    useEffect(() => {
+        // console.log('=== inspect prefecture_list =');
+        // console.log(prefecture_list);
+
+        // console.log('=== inspect currentPrefectures =');
+        // console.log(currentPrefectures);
+
         let temp = [];
         let len = prefecture_list.length;
-        let len_2 = currentPrefecture.length;
+        let len_2 = currentPrefectures.length;
 
         for (let i = 0; i < len; i++) {
             temp[i] = false;
 
             for (let j = 0; j < len_2; j++) {
-                if (currentPrefecture[j].id === prefecture_list[i].id) {
+                if (currentPrefectures[j].id === prefecture_list[i].id) {
                     temp[i] = true;
                     break;
                 }
@@ -70,21 +75,21 @@ export const SelectPrefectureDialog = (props) => {
         }
         setFilter(temp);
 
-    }, [currentPrefecture]);
+    }, [currentPrefectures, prefecture_list]);
 
     const handlePrefecture = (e, index) => {
         let checked = e.target.checked;
         let temp = [];
 
         if (checked) {
-            temp = Object.assign(temp, currentPrefecture);
+            temp = Object.assign(temp, currentPrefectures);
             temp.push(prefecture_list[index]);
         }
         else {
             temp = prefectures.filter((item) => item.id !== prefecture_list[index].id);
         }
 
-        setCurrentPrefecture(temp);
+        setCurrentPrefectures(temp);
 
         let t_filter = filter;
         t_filter[index] = checked;
@@ -92,7 +97,7 @@ export const SelectPrefectureDialog = (props) => {
     }
 
     const onClose = () => {
-        dispatch(updatePrefectures(currentPrefecture)); 
+        dispatch(updatePrefectures(currentPrefectures)); 
 
         let url = props.redirect;
 
@@ -153,7 +158,7 @@ export const SelectFilterDialog = (props) => {
     const features = useSelector(state => state.stores.features);
     
     const [feature_list, setFeature_list] = useState([]);
-    const [currentFeature, setCurrentFeature] = useState(features);
+    const [currentFeatures, setCurrentFeatures] = useState(features);
     const [filter, setFilter] = useState([]);
 
     const fetchFeaturelist = async () => {
@@ -176,22 +181,22 @@ export const SelectFilterDialog = (props) => {
         }
         
         fetchData();
-    }, []);
+    }, [features]);
 
     useEffect(() => {
-        setCurrentFeature(features);
+        setCurrentFeatures(features);
     }, [features]);
 
     useEffect(() => {
         let len = feature_list.length;
-        let len_2 = currentFeature.length;
+        let len_2 = currentFeatures.length;
         let temp = [];
 
         for(let i = 0; i < len; i++) {
             temp[i] = false;
 
             for (let j = 0; j < len_2; j++) {
-                if(currentFeature[j].id === feature_list[i].id) {
+                if(currentFeatures[j].id === feature_list[i].id) {
                     temp[i] = true;
                     break;
                 }
@@ -200,21 +205,21 @@ export const SelectFilterDialog = (props) => {
 
         setFilter(temp);
 
-    }, [currentFeature]);
+    }, [currentFeatures, feature_list]);
 
     const handleFeature = (e, index) => {
         let checked = e.target.checked;
         let temp = [];
 
         if(checked) {
-            temp = Object.assign(temp, currentFeature);
+            temp = Object.assign(temp, currentFeatures);
             temp.push(feature_list[index]);
         }
         else {
             temp = features.filter((item) => item.id !== feature_list[index].id);
         }
         
-        setCurrentFeature(temp);
+        setCurrentFeatures(temp);
         
         let t_filter = filter;
         t_filter[index] = checked;
@@ -222,7 +227,7 @@ export const SelectFilterDialog = (props) => {
     }
 
     const onClose = () => {
-        dispatch(updateFeatures(currentFeature));
+        dispatch(updateFeatures(currentFeatures));
 
         let url = props.redirect;
 

@@ -12,6 +12,21 @@
     filter: brightness(135%);
 }
 
+.cast_detail_container {
+    margin: 0;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1; 
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    padding: 10px 1px 10px 1px !important;
+    border-bottom: 1px solid rgb(250 191 47);
+}
+
+.cast_photo_div {
+    text-align: left;
+}
+
 .title_bar {
     padding: 10px !important;
     width: 100%;
@@ -26,13 +41,133 @@
     line-height: 1;
 }
 
-@media screen and (max-width: 767px) {
+.cast_detail {
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.cast_photo {
+    width: 80%;
+    float: right;
+}
+
+.cast_name {
+    text-align: left;
+}
+
+.field_label {
+    float: right; 
+    color: white;
+    background-color: #888;
+    font-size: 0.8rem;
+    padding: 2px 10px 2px 10px;
+    border-radius: 7px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.field_s_label {
+    float: right; 
+    color: white;
+    background-color: #e25644;
+    font-size: 0.8rem;
+    padding: 2px 10px 2px 10px;
+    border-radius: 7px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.field_value {
+    float: left; 
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.cast_label {
+    float: left; 
+    color: white;
+    background-color: #1b4eeb;
+    font-size: 0.8rem;
+    padding: 2px 10px 2px 10px;
+    border-radius: 7px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.cast_value {
+    margin-left: 3px;
+    color: red;
+    font-weight: bold;
+}
+
+.SliderDiv {
+    margin-top: 15px;
+    border: 1px solid #1b4eeb;
+    padding: 5px;
+    height: auto;
+}
+
+.imageDiv {
+    position: relative;
+    width: 100px !important;
+}
+
+.imageSlider {
+    width: 90% !important; 
+    position: relative;
+    margin: auto;    
+}
+
+.image_info {
+    position: absolute;
+    top: 84%;
+    left: 5%;
+    background-color: black;
+    opacity: 0.7;
+    color: white;
+    width: 90% !important;
+    text-align: center;
+    font-size: 12px;
+}
+
+@media screen and (max-width: 768px) {
+    .title_bar {
+        padding: 10px !important;
+        width: 65%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
     .container {
         margin: 0;
         padding: 0 15px 30px 15px !important;
+        width: 50%;
+        text-align: -webkit-center;
+        display: block;
     }
 
     .container img {
         margin: 0 !important;
+        width: 65%;
     }
+
+    .cast_detail_container {
+        display: block;
+        
+    }
+
+    .cast_photo_div {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .cast_photo {
+        width: 50%;
+        float: none;
+    }
+
+    .cast_name {
+        text-align: center;
+    }    
 }

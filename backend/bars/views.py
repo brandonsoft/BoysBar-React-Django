@@ -1,17 +1,36 @@
 from django.http import JsonResponse
 from django.db import connection
+from django.conf import settings
+
+import os
 import json
 import urllib.parse
 import datetime
 
-# Create your views here.
-
+# ======== datetime.date objects handle funtion ======================================= #
 class CustomJSONEncoder(json.JSONEncoder):
     """Custom JSON encoder that can handle datetime.date objects."""
     def default(self, obj):
         if isinstance(obj, datetime.date):
             return obj.isoformat()
         return super().default(obj)
+
+# ======== request funtion ======================================= #
+# ==== i.e. bars/casts_search?q=keyword => key_decode: keyword === #
+# ================================================================ #
+def handleRequest(request):
+
+    key = str(request)
+    x = key.find("?")
+    x += 1
+    key = key[x : -2]       # key = cast=xy
+
+    x = key.find("=")
+    x += 1
+    key = key[x:]
+    key_decode = urllib.parse.unquote(key)
+
+    return key_decode
 
 def allBarFeatures(request):
 
@@ -203,18 +222,7 @@ def casts_suggest(request):
 def casts_search(request):
 
     # ======== analysis request ==============.
-    # request => <WSGIRequest: GET '/bars/casts_search?cast=xy'>
-    key = str(request)
-    x = key.find("?")
-    x += 1
-    key = key[x : -2]       # key = cast=xy
-    print("==== key ==="+key)
-    # ========================================.
-
-    x = key.find("=")
-    x += 1
-    key = key[x:]
-    key_decode = urllib.parse.unquote(key)
+    key_decode = handleRequest(request)
 
     where_keyword = " where cast_name like '%"+key_decode+"%' or provinces like '%"+key_decode+"%'"
     sql = "select * from cast_search_tbl" + where_keyword
@@ -235,12 +243,69 @@ def casts_search(request):
     # return the JSON response
     return response
 
+def casts_per_bar(request):
+
+    # ======== analysis request ==============.
+    key_decode = handleRequest(request)
+    
+    where_keyword = " where bar_ids like '%,"+key_decode+",%'"
+    sql = "select * from cast_search_tbl" + where_keyword
+
+    with connection.cursor() as cursor: 
+
+        cursor.execute(sql)
+
+        results = cursor.fetchall()
+
+        # print(results)
+        rows = [dict(zip([column[0] for column in cursor.description], row)) for row in results]
+        # create a JSON response
+        response_data = json.dumps(rows, cls=CustomJSONEncoder)
+        json_data = json.loads(response_data)
+        response = JsonResponse(json_data, safe=False)
+
+    # return the JSON response
+    return response
+
+def search_image_files(prefix):
+    
+    media_root = os.path.abspath(settings.MEDIA_ROOT)
+
+    # Loop over all files in the media directory
+    filenames = os.listdir(media_root + '/bars/')
+    matching_filenames = []
+    for filename in filenames:
+        # Check if the file has the given prefix and is an image file
+        if filename.startswith(prefix) and filename.lower().endswith(('.jpg', '.jpeg', '.png')):
+            matching_filenames.append(filename)
+    
+    # Return the list of matching filenames
+    return matching_filenames
+
+
+def casts_checkimage_exist(request):
+
+    prefix = handleRequest(request)
+
+    if prefix is None:
+        return JsonResponse({
+            'error': 'Missing prefix parameter'
+        })    
+    
+    filenames = search_image_files(prefix)
+
+    response_data = json.dumps(filenames, cls=CustomJSONEncoder)
+    json_data = json.loads(response_data)
+    response = JsonResponse(json_data, safe=False)
+
+    return response
+
 
 # sql of view [bar_search_tbl]
 
 # SELECT CONCAT_WS(" / ", pa.area_title, pp.province_title) province, bb.*, 
 # 				(					
-# 						select GROUP_CONCAT(bars_bar_category.id SEPARATOR ',') as categoryset
+# 						select GROUP_CONCAT(CONCAT(",", bars_bar_category.id, ",") SEPARATOR ',') as categoryset
 # 						from bars_bar_fk_categorys 
 # 						LEFT JOIN bars_bar_category on bars_bar_category.id = bars_bar_fk_categorys.bar_category_id
 # 						where bar_id = bb.id
@@ -252,7 +317,7 @@ def casts_search(request):
 # 						where bar_id = bb.id
 # 				) as bar_categorys, 
 # 				(					
-# 						select GROUP_CONCAT(bars_bar_facility.id SEPARATOR ',') as facilityset
+# 						select GROUP_CONCAT(CONCAT(",",bars_bar_facility.id, ',') SEPARATOR ',') as facilityset
 # 						from bars_bar_fk_facilitys 
 # 						LEFT JOIN bars_bar_facility on bars_bar_facility.id = bars_bar_fk_facilitys.bar_facility_id
 # 						where bar_id = bb.id
@@ -270,7 +335,7 @@ def casts_search(request):
 # 						where bar_id = bb.id
 # 				) as paymentmethods,
 # 				(					
-# 						select GROUP_CONCAT(bars_paymentmethod.id SEPARATOR ',') as paymentmethodset
+# 						select GROUP_CONCAT(CONCAT(",",bars_paymentmethod.id, ",") SEPARATOR ',') as paymentmethodset
 # 						from bars_bar_fk_paymentmethods
 # 						LEFT JOIN bars_paymentmethod on bars_paymentmethod.id = bars_bar_fk_paymentmethods.paymentmethod_id
 # 						where bar_id = bb.id
@@ -282,7 +347,7 @@ def casts_search(request):
 # 						where bar_id = bb.id
 # 				) as bar_amusements,
 # 				(					
-# 						select GROUP_CONCAT(bars_bar_amusement.id SEPARATOR ',') as amusementset
+# 						select GROUP_CONCAT(CONCAT(",",bars_bar_amusement.id, ",") SEPARATOR ',') as amusementset
 # 						from bars_bar_fk_amusements 
 # 						LEFT JOIN bars_bar_amusement on bars_bar_amusement.id = bars_bar_fk_amusements.bar_amusement_id
 # 						where bar_id = bb.id
@@ -293,3 +358,32 @@ def casts_search(request):
 # 		FROM bars_bar as bb 
 # 		LEFT JOIN province_province as pp on bb.fk_province_id = pp.id
 # 		left join province_area as pa on pa.id = pp.area_id 
+# ======================= sql end ===========================================
+
+# = ======== sql of view [bar_search_tbl] ===================================
+# select bc.*, 
+# 	(
+# 		select 	GROUP_CONCAT(concat(',', bars_bar.id, ',') SEPARATOR ",") bars 					
+# 		from bars_bar_fk_casts
+# 		LEFT JOIN bars_bar on bars_bar.id = bars_bar_fk_casts.bar_id		
+# 		where bars_bar_fk_casts.cast_id = bc.id
+# 	) as bar_ids,
+# 	(
+# 		select 	GROUP_CONCAT(bars_bar.bar_title SEPARATOR ",") bars 					
+# 		from bars_bar_fk_casts
+# 		LEFT JOIN bars_bar on bars_bar.id = bars_bar_fk_casts.bar_id		
+# 		where bars_bar_fk_casts.cast_id = bc.id
+# 	) as bars,
+# 	(
+# 		select 	GROUP_CONCAT(CONCAT_WS(" / ", province_area.area_title, province_province.province_title) SEPARATOR ", ") provinces 
+# 		from bars_bar_fk_casts
+# 		LEFT JOIN bars_bar on bars_bar.id = bars_bar_fk_casts.bar_id
+# 		left join province_province on province_province.id = bars_bar.fk_province_id
+# 		left join province_area on province_province.area_id = province_area.id
+# 		where bars_bar_fk_casts.cast_id = bc.id
+# 	) as provinces
+# from bars_cast bc 
+# ======================= sql end ===========================================
+
+
+

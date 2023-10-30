@@ -25,10 +25,10 @@ const Footer = (props) => {
                     <Col xs={6}>
                         <ul className={styles.image_list}>
                             <li className={styles.image_item}>
-                                <img src="http://localhost:8000/media/bars/bar1.jpg"/>
+                                <img src="http://localhost:8000/media/bars/bar1-0.jpg"/>
                             </li>
                             <li className={styles.image_item} onClick={ () => navigate('/store') }>
-                                <img src="http://localhost:8000/media/bars/bar2.jpg" />
+                                <img src="http://localhost:8000/media/bars/bar2-0.jpg" />
                             </li>
                             <li className={styles.image_item} onClick={ () => navigate('/cast') }>
                                 <img src="http://localhost:8000/media/casts/1.jpg" />

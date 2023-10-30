@@ -1,0 +1,43 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    background-color: #f4f4f4;
+    padding: 1em;
+  }
+  
+  .pagination li {
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+  
+  .pagination li a {
+    color: #005baf !important;
+    padding: 0.6rem;
+    /* border: 1px solid #ccc; */
+    /* border-radius: 5px; */
+    font-weight: 500;
+    font-size: 16px;
+    text-decoration: none;
+  }
+  
+  .pagination .active a {
+    background: #fff;
+    color: #00cfdd !important;
+    border: 1px solid #878686;
+  }
+  
+  .pagination .disabled a {
+    opacity: 0.5;
+    cursor: default;
+    background-color: transparent;
+    color: #ccc;
+    border-color: #ccc;
+  }
+
+  
+@media screen and (max-width: 768px) {
+    .pagination li a {
+        padding: 0.3rem;
+    }
+}

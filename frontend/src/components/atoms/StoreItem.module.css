@@ -4,14 +4,25 @@
     overflow: hidden;
     cursor: pointer;
     z-index: 1;
+    font-family: Noto Sans Japanese, ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, ＭＳ Ｐゴシック, Osaka, sans-serif;
+    width: 25%;
 }
 
 .container img {
     width: 100%;
+    
 }
 
 .container img:hover {
     filter: brightness(135%);
+}
+
+.storeView_tabs {
+    width: 100%;
+}
+
+.storeView_tab {    
+    width: 45%;    
 }
 
 .title_bar {
@@ -23,18 +34,309 @@
 .title_bar h5 {
     color: #ffffff;
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-align: center;
     line-height: 1;
 }
 
-@media screen and (max-width: 767px) {
+.storeItemDetail_detail {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    padding: 10px 1px 30px 1px !important;
+    border-bottom: 1px solid rgb(250 191 47);
+    width: 100%;
+}
+
+.storeItemList_detail {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    padding: 10px 1px 30px 1px !important;
+    border-bottom: 1px solid rgb(250 191 47);
+    width: 100%;
+}
+
+.store_label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: white;
+    background-color: #888;
+    font-size: 0.8rem;
+    padding: 2px 10px 2px 10px;
+    border-radius: 7px;
+    letter-spacing: 1px;
+}
+
+.storeItemDetail_field_label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0051e0;
+    margin-top: 10px;
+    margin-right: 15px;
+}
+
+.storeItemDetail_field_value {
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-top: 10px;
+}
+
+
+.field_label {
+    float: left; 
+    color: white;
+    background-color: #888;
+    font-size: 0.8rem;
+    padding: 2px 10px 2px 10px;
+    border-radius: 7px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.field_value {
+    float: left; 
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.cast_label {
+    float: left; 
+    color: white;
+    background-color: #1b4eeb;
+    font-size: 0.8rem;
+    padding: 2px 10px 2px 10px;
+    border-radius: 7px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.cast_value {
+    margin-left: 3px;
+    color: red;
+    font-weight: bold;
+}
+
+.SliderDiv {
+    margin-top: 15px;
+    border: 1px solid #1b4eeb;
+    padding: 5px;
+    height: auto;
+}
+
+.barsliderDiv {
+    margin-top: 15px;    
+    padding: 5px;
+    height: auto;
+}
+
+.storeItemDetail_imageDiv {
+    position: relative;
+    width: 23vw !important;
+    margin-left: 10px;
+}
+
+.storeItemList_imageDiv {
+    position: relative;
+    width: 120px !important;
+}
+
+.imageSlider {
+    width: 95% !important; 
+    position: relative;
+    margin: auto;    
+}
+
+.image_info {
+    position: absolute;
+    top: 84%;
+    left: 2%;
+    background-color: black;
+    opacity: 0.7;
+    color: white;
+    width: 95% !important;
+    text-align: center;
+    font-size: max(12px, 0.7rem);
+}
+
+.storeItemList_image_info {
+    position: absolute;
+    top: 84%;
+    left: 2%;
+    background-color: black;
+    opacity: 0.7;
+    color: white;
+    width: 95% !important;
+    text-align: center;
+    font-size: max(12px, 0.7rem);
+}
+
+.storeItemList_title {
+    font-weight: bold;
+    color: #AC36CE;
+}
+
+.store_info_mark {
+    border: 1px solid #222;
+    border-radius: 6px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    
+    line-height: 1;
+    margin: 0 5px 0 0;
+    padding: 4px 15px;
+}
+
+a.store_info_name {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    background-color: #AC36CE;
+    padding: 15px 40px;
+    border-radius: 7px;
+}
+
+a.store_info_name:hover {
+    text-decoration: none;
+    opacity: 0.7;
+    
+}
+
+.store_info_category {
+    font-size: 16px;
+    color: #888;
+    line-height: 1.8;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 1024px) {
+
+    .storeItemDetail_imageDiv {
+        width: 26vw !important;
+    }
+
+    .imageDiv {
+        width: 110px !important;
+    }
+
+    .storeItemList_imageDiv {
+        width: 15vw !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
     .container {
         margin: 0;
         padding: 0 15px 30px 15px !important;
+        text-align: -webkit-center;
+        width: 33%;
+    }
+
+    .storeItemDetail_detail {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+        padding: 10px 1px 30px 1px !important;
+        border-bottom: 1px solid rgb(250 191 47);
+        width: 100% !important;
+    }
+
+    .storeItem_mainimg {
+        width: 75% !important;
+    }
+
+    .storeItemList_detail {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+        padding: 10px 1px 30px 1px !important;
+        border-bottom: 1px solid rgb(250 191 47);
+        width: 100%;
+    }
+
+    .storeView_tab {    
+        width: 100%;    
+    }   
+    
+    .storeItemDetail_imageDiv {
+        position: relative;
+        width: 31vw !important;
+        margin-left: 10px;
+    }
+
+    .storeItemList_imageDiv {
+        width: 29vw !important;
+    }
+
+    .storeItemList_image_info {
+        top: 91%;
+        left: 3%;
+        width: 95% !important;
+        font-size: max(12px, 0.7rem);
+    }
+
+    .storeItemDetail_field_label, .storeItemDetail_field_value {
+        float: left;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .container {
+        margin: 0;
+        padding: 0 15px 30px 15px !important;
+        width: 50%;
     }
 
     .container img {
         margin: 0 !important;
+    }
+
+    .storeView_tab {    
+        width: 100%;    
+    }
+    
+    .storeItemDetail_detail {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+        padding: 10px 1px 30px 1px !important;
+        border-bottom: 1px solid rgb(250 191 47);
+        width: 100% !important;
+    }
+
+    .storeItemList_detail {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+        padding: 10px 1px 30px 1px !important;
+        border-bottom: 1px solid rgb(250 191 47);
+        width: 100%;
+    }
+    
+    .storeItemDetail_imageDiv {
+        width: min(11rem, 200px) !important;
+    }
+
+    .imageDiv {
+        width: max(160px, 10rem) !important
+    }
+
+    .image_info {
+        top: 91%;
+        left: 3%;
+        width: 95% !important;
+        font-size: max(12px, 0.7rem);
+    }
+
+    .storeItemList_image_info {
+        top: 91%;
+        left: 3%;
+        width: 95% !important;
+        font-size: max(12px, 0.7rem);
+    }
+
+    .storeItemDetail_field_label, .storeItemDetail_field_value {
+        float: left;
     }
 }

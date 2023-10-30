@@ -1,5 +1,5 @@
 .container {
-    padding: 50px 0 20px 0 !important;
+    padding: 30px 0 0 0 !important;
 }
 
 .dock_container {
@@ -22,14 +22,14 @@
 
 @media screen and (max-width: 1200px) {
     .container {
-        padding: 30px 15px !important;
+        padding: 30px 15px 0 15px !important;
         border: none;
     }
 }
 
 @media screen and (max-width: 767px) {
     .container {
-        padding: 30px 15px !important;
+        padding: 30px 15px 0 15px !important;
         border: none;
     }
 

@@ -9,6 +9,9 @@ import styles from './SearchBar.module.css';
 import { fetchCasts, searchCasts } from '../../slices/storesSlice';
 
 
+import Alert from '@mui/material/Alert';
+
+
 const SearchBar = (props) => {
 
     const casts = props.casts;
@@ -52,8 +55,11 @@ const SearchBar = (props) => {
     return (
         <Container fluid className={styles.container}>
             <Row className={`${styles.dock_container} w-100`}>
+               
                 <Col xs={12} sm={12} md={7} className="my-3">
-                    検索結果 {casts.length} 件
+                    <Alert variant="outlined" severity="success">
+                        検索結果 {casts.length} 件
+                    </Alert>
                 </Col>
                 <Col xs={12} sm={12} md={5} className={`${styles.input_group} my-3`}>
                     <SearchBox placeholder='キャスト名・店舗名' theme={2} value={castName} className='w-100' 

@@ -1,6 +1,6 @@
 from django.db import models
 from province.models import Province 
-from admin_kit.models import MultiSelectField, SelectField
+from admin_kit.models import SelectField
 
 # Create your models here.
 
@@ -41,18 +41,27 @@ class Cast(models.Model):
 
     cast_name = models.CharField(max_length = 30, null = False, default = '', verbose_name='キャスト名')
     sex = (
-        (0, 'male'),
-        (1, 'female')
+        (0, '男'),
+        (1, '女')
     )
 
     cast_sex = SelectField(choices=sex, verbose_name='性別')
 
-    cast_birthday = models.DateField(null = True, verbose_name='生年月日')
+    cast_birthday = models.DateField(null = True, verbose_name='誕生日')
+
+    blood = (
+        (0, 'O型'),
+        (1, 'A型'),
+        (2, 'B型'),
+        (3, 'AB型')
+    )
+    cast_blood = SelectField(choices=blood, default= 0, verbose_name='血液型')
+    cast_horoscope = models.CharField(max_length=20, null = True)
     # cast_photo = models.CharField(max_length= 100) => photo = [no].jpg
     cast_mobilephone = models.CharField(max_length= 30, null = True, verbose_name='携帯電話番号')
     cast_homephone = models.CharField(max_length= 30, null = True, verbose_name='家電番号')
     cast_address = models.CharField(max_length = 100, null = False, default = '', verbose_name='住所')
-    cast_height = models.FloatField(null = True, verbose_name='キー')
+    cast_height = models.FloatField(null = True, verbose_name='身長')
     cast_weight = models.FloatField(null = True, verbose_name='体重')
 
     fk_bars =     models.ManyToManyField('Bar', through='Bar_Fk_Casts')
