@@ -45,6 +45,9 @@
     padding: 10px 1px 30px 1px !important;
     border-bottom: 1px solid rgb(250 191 47);
     width: 100%;
+    max-width: 1080px;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .storeItemList_detail {

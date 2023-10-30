@@ -25,6 +25,7 @@
 
 .cast_photo_div {
     text-align: left;
+    
 }
 
 .title_bar {
@@ -159,7 +160,7 @@
 
     .cast_photo_div {
         text-align: center;
-        width: 100%;
+        width: 65%;
     }
     
     .cast_photo {

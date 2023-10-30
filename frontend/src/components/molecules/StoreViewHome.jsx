@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { StoreItemHome, StoreItemList, StoreItemDetail } from '../atoms/StoreItem';
 import styles from './StoreView.module.css';
 import '../../assets/css/pagination.css';
+import { backendPath } from '../../config';
 
 const StoreViewHome = (props) => {
 
@@ -57,7 +58,7 @@ const StoreViewHome = (props) => {
                     displayedStores.map((item, index) => {
                         return (
                             <StoreItemHome key={item.id} 
-                                    info={{name: item.bar_title, image: `http://localhost:8000/media/bars/bar${item.id}-0.jpg`}} 
+                                    info={{name: item.bar_title, image: `${backendPath}media/bars/bar${item.id}-0.jpg`}} 
                                     store={item} casts={casts}/>
                         )
                     })

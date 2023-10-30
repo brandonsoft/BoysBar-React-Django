@@ -1,13 +1,15 @@
 import Col from 'react-bootstrap/Col';
 import styles from './CastItem.module.css';
 
+import { backendPath } from '../../config.js';
+
 export const CastItem = (props) => {
 
     const cast = props.cast;
 
     return (
         <Col sm={3} md={3} lg={2} className={styles.container}>
-            <img src={`http://localhost:8000/media/casts/${cast.id}.jpg`} alt="Cast image"/>
+            <img src={`${backendPath}media/casts/${cast.id}.jpg`} alt="Cast image"/>
             <div className={styles.title_bar}>
                 <h5>{cast.cast_name}</h5>
             </div>
@@ -23,7 +25,7 @@ export const CastItemList = (props) => {
     return (
         <Col sm={12} md={12} className={styles.cast_detail_container + ' row '}>
             <Col xs={12} md={2} className={styles.cast_photo_div}>
-                <img src={`http://localhost:8000/media/casts/${cast.id}.jpg`} className={styles.cast_photo}></img>
+                <img src={`${backendPath}media/casts/${cast.id}.jpg`} className={styles.cast_photo}></img>
             </Col>
             <Col xs={12} md={10} className={styles.cast_detail}>
                 <Col xs={12} md={12} className={styles.cast_name}>

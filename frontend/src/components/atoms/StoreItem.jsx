@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import React from "react";
 
 import { CastItemList } from '../atoms/CastItem';
+import { backendPath } from '../../config.js';
 
 import Slider from "react-slick";
 import axios from 'axios';
@@ -21,14 +22,14 @@ export const StoreItem = (props) => {
 
     const store = props.store;
 
-    const selectPagetype = (newPagetype, store_id) => {
-        props.selectPagetype(newPagetype, store_id);
+    const handleStoreDetail = (store_id) => {
+        navigate('/store_detail', { state: { storeId: store_id }});
     }
 
     return (
         <Col sm={12} md={12} className={styles.container}>
-            <img src={`http://localhost:8000/media/bars/bar${store.id}-0.jpg`} alt="Card image cap" 
-                    onClick={() => { navigate('/store_detail', { state: { storeId: store.id }}) }}/>
+            <img src={`${backendPath}media/bars/bar${store.id}-0.jpg`} alt="Card image cap" 
+                    onClick={ () => handleStoreDetail(store.id) }/>
             <div className={styles.title_bar}>
                 <h5>{store.bar_title}</h5>
             </div>
@@ -43,17 +44,20 @@ export const StoreItemHome = (props) => {
 
     const navigate = useNavigate();
 
+    const handleStoreDetail = (store_id) => {
+        navigate('/store_detail', { state: { storeId: store_id }});
+    }
+
     return (
         <Col sm={12} md={12} className={styles.container}>
-            <img src={`http://localhost:8000/media/bars/bar${store.id}-0.jpg`} alt="Card image cap" 
-                    onClick={() => { navigate('/store_detail', { state: { storeId: store.id }})}}/>
+            <img src={`${backendPath}media/bars/bar${store.id}-0.jpg`} alt="Card image cap" 
+                    onClick={ () => handleStoreDetail(store.id) }/>
             <div className={styles.title_bar}>
                 <h5>{store.bar_title}</h5>
             </div>
         </Col>
     )
 }
-
 
 export const StoreItemList = (props) => {
 
@@ -63,6 +67,10 @@ export const StoreItemList = (props) => {
     const casts = props.casts;
     
     const [store_casts, setStore_casts] = useState([]);
+
+    const handleStoreDetail = (store_id) => {
+        navigate('/store_detail', { state: { storeId: store_id }});
+    }
     
     const getStore_Casts = async(casts) => {
         
@@ -96,14 +104,7 @@ export const StoreItemList = (props) => {
         }              
         
         fetchData();
-        // console.log(store_casts);
-        
     }, [casts])
-    const selectPagetype = (newPagetype, store_id) => {
-        // alert(store_id);
-        props.selectPagetype(newPagetype, store_id);
-    }
-
     
     const imagesPerSlide_pc = store_casts.length < 4? store_casts.length: 4;   
     const imagesPerSlide_1024 = store_casts.length < 3? store_casts.length: 3;    
@@ -160,8 +161,8 @@ export const StoreItemList = (props) => {
     return (
         <Col sm={12} md={12} className={styles.container + ' row ' + styles.storeItemList_detail}>
             <Col xs={12} md={4}>
-                <img src={`http://localhost:8000/media/bars/bar${store.id}-0.jpg`} 
-                        onClick={() => { navigate('/store_detail', { state: { storeId: store.id }})}}
+                <img src={`${backendPath}media/bars/bar${store.id}-0.jpg`} 
+                        onClick={ () => handleStoreDetail(store.id) }
                         className={styles.storeItem_mainimg}></img>
             </Col>
             <Col xs={12} md={8}>
@@ -202,7 +203,7 @@ export const StoreItemList = (props) => {
                                     store_casts.map((item, index) =>{
                                         return (
                                             <div key={item.id} className={styles.storeItemList_imageDiv}>
-                                                <img src={`http://localhost:8000/media/casts/${item.id}.jpg`} className={styles.imageSlider}></img>
+                                                <img src={`${backendPath}media/casts/${item.id}.jpg`} className={styles.imageSlider}></img>
                                                 <div className={styles.storeItemList_image_info}>{item.cast_name}</div>
                                             </div>
                                         )
@@ -224,20 +225,16 @@ export const StoreItemDetail = (props) => {
     
     const store = props.store;
     const casts = props.casts;
-    console.log(" ========= store = ");
-    console.log(store);
     /*  In the http path   */
     const checkFilesExist = async (filenamePrefix) => {
                         
-        const response = await axios.get("http://localhost:8000/bars/casts_checkimage_exist", {
+        const response = await axios.get(`${backendPath}bars/casts_checkimage_exist`, {
             params: {imgprefix: filenamePrefix}
         });
         return response.data;        
     };
 
     const filenamePrefix = 'bar'+store.id+"-";
-    console.log(" === filenamePrefix=");
-    console.log(filenamePrefix);
 
     const [existingImages, setExistingImages] = useState([]);
 
@@ -250,9 +247,6 @@ export const StoreItemDetail = (props) => {
         fetchData(filenamePrefix);
     }, [filenamePrefix]);
 
-    console.log(" === existingImages ===");
-    console.log(existingImages);
-
     const imagesPerSlide_pc = existingImages.length < 3? existingImages.length: 3;   
     const imagesPerSlide_768 = existingImages.length < 2? existingImages.length: 2;
     const imagesPerSlide_376 = 1;
@@ -260,7 +254,7 @@ export const StoreItemDetail = (props) => {
     const settings = {
         accessibility: true,
         arrows: true,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 2000,
         centerMode: true,
         dots: true,
@@ -316,7 +310,7 @@ export const StoreItemDetail = (props) => {
                                 existingImages.map((item, index) => {
                                     return (
                                         <div key={index} className={styles.storeItemDetail_imageDiv}>
-                                            <img src={`http://localhost:8000/media/bars/${item}`} className={styles.imageSlider}></img>                                        
+                                            <img src={`${backendPath}media/bars/${item}`} className={styles.imageSlider}></img>                                        
                                         </div>
                                     )
                                 })

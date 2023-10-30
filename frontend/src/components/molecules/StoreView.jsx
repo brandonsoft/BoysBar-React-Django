@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 import { Container, Col } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 
-import { StoreItem, StoreItemList, StoreItemDetail } from "../atoms/StoreItem";
+import { StoreItem, StoreItemList } from "../atoms/StoreItem";
 import styles from "./StoreView.module.css";
 import "../../assets/css/pagination.css";
 
@@ -69,10 +69,7 @@ const StoreView = (props) => {
     }
 
     useEffect(() => {
-        console.log("=== search start === ");
         const search = "," + currentStore.id + ",";
-        console.log("=== search = " + search);
-
         const fetchData = async (search) => {
             
             const resultCasts = await matchStore(search);
@@ -81,13 +78,6 @@ const StoreView = (props) => {
 
         fetchData(search);
     }, []);
-
-    console.log('===currentStore===');
-    console.log(currentStore);
-    //   console.log('===casts===');
-    //   console.log(casts);
-    //   console.log('===currentStoreCasts===');
-    //   console.log(currentStoreCasts);
 
     return (
         <Container fluid className={styles.container}>
@@ -133,8 +123,7 @@ const StoreView = (props) => {
                 <StoreItem
                     key={item.id}
                     store={item}
-                    selectPagetype={selectPagetype}
-                />
+                    selectPagetype={selectPagetype}/>
                 );
             })}
             {pagetype == 1 &&
@@ -144,11 +133,9 @@ const StoreView = (props) => {
                     key={item.id}
                     store={item}
                     casts={casts}
-                    selectPagetype={selectPagetype}
-                />
+                    selectPagetype={selectPagetype}/>
                 );
-            })}
-            
+            })}            
         </Row>
         
         <ReactPaginate

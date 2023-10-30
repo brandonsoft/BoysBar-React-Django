@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { backendPath } from '../config.js';
 
-const STORE_URL = 'http://localhost:8000/bars';
-const CAST_URL = "http://localhost:8000/bars";
+const STORE_URL = `${backendPath}bars`;
+const CAST_URL = `${backendPath}bars`;
 
 export const fetchSuggestStore = createAsyncThunk(
   'stores/suggest',

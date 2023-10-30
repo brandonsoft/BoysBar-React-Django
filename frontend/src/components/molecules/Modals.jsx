@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updatePrefectures, updateFeatures } from '../../slices/storesSlice';
 
 import axios from 'axios';
+import { backendPath } from '../../config.js';
 
 export const SelectPrefectureDialog = (props) => {
 
@@ -29,7 +30,7 @@ export const SelectPrefectureDialog = (props) => {
     const fetchPrefecturelist = async() => {
         let prefecturelist = [];
 
-        let response = await axios.get('http://localhost:8000/province/all_area_province');                
+        let response = await axios.get(`${backendPath}province/all_area_province`);                
         if(response.status === 200) {
             prefecturelist = response.data;
             
@@ -164,7 +165,7 @@ export const SelectFilterDialog = (props) => {
     const fetchFeaturelist = async () => {
         let featurelist = [];
 
-        let response = await axios.get("http://localhost:8000/bars/all_features")
+        let response = await axios.get(`${backendPath}bars/all_features`)
         if(response.status == 200){
             featurelist = response.data;
         }  else {
