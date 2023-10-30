@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap";
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
 import { fetchSuggestStore, fetchCasts } from "../slices/storesSlice";
 
@@ -19,13 +19,20 @@ const StoreDetailScreen = () => {
     
     const storeList = useSelector((state) => state.stores.stores);
     const casts = useSelector(state => state.stores.casts);
+    
+    const storeId = useSelector(state => state.stores.detail_storeid);
+
+    
 
     const [currentStore, setCurrentStore] = useState({});
     const [currentStoreCasts, setCurrentStoreCasts] = useState([]);
-    
-    const location = useLocation();
-    const storeId = location.state.storeId;
 
+    const navigate = useNavigate();
+
+    if(storeId == 0) {
+        navigate('/store');
+    }
+    
     useEffect(() => {
         dispatch(fetchSuggestStore());
         dispatch(fetchCasts());

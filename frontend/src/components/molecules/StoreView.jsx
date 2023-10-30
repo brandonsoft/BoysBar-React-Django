@@ -14,9 +14,11 @@ import Tab from "@mui/material/Tab";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import Alert from "@mui/material/Alert";
-import store from "../../store";
 
 const StoreView = (props) => {
+    
+    const stores = props.stores;
+
     /* ===== Material UI: [ IconLabelTabs ] =============*/
     const [value, setValue] = useState(0);
 
@@ -25,9 +27,7 @@ const StoreView = (props) => {
     };
     /* ==================================================*/
 
-    const stores = props.stores;
-
-    /* ======= React pagination ==================*/
+    /* ======= React pagination =========================*/
     const itemsPerPage = 12;
     const pageCount = Math.ceil(stores.length / itemsPerPage);
 

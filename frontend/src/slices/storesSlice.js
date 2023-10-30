@@ -56,7 +56,8 @@ const initialState = {
   casts: [],
   prefectures: [],
   features: [],
-  keyword: ''
+  keyword: '',
+  detail_storeid: 0
 }
 
 const storesSlice = createSlice({
@@ -85,6 +86,9 @@ const storesSlice = createSlice({
 
     changeKeyword: (state, action) => {
       state.keyword = action.payload;
+    },
+    updateDetailStoreId: (state, action) => {
+      state.detail_storeid = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -120,6 +124,7 @@ export const {
   updateFeatures,
 
   changeKeyword,
+  updateDetailStoreId,
 } = storesSlice.actions;
 
 export default storesSlice.reducer;

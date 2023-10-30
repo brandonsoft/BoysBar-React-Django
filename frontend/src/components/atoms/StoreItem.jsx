@@ -11,18 +11,24 @@ import { backendPath } from '../../config.js';
 import Slider from "react-slick";
 import axios from 'axios';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 // import fs from 'fs';
 
 import "../../assets/css/slick.css"; 
 import "../../assets/css/slick-theme.css";
+import { updateDetailStoreId } from '../../slices/storesSlice';
 
 export const StoreItem = (props) => {
+
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
     const store = props.store;
 
     const handleStoreDetail = (store_id) => {
+        dispatch(updateDetailStoreId(store_id));
         navigate('/store_detail', { state: { storeId: store_id }});
     }
 
@@ -40,12 +46,16 @@ export const StoreItem = (props) => {
 
 export const StoreItemHome = (props) => {
 
+    const dispatch = useDispatch();
     const store = props.store;
 
     const navigate = useNavigate();
 
     const handleStoreDetail = (store_id) => {
-        navigate('/store_detail', { state: { storeId: store_id }});
+        
+        dispatch(updateDetailStoreId(store_id));
+        // navigate('/store_detail', { state: { storeId: store_id }});
+        navigate('/store_detail');
     }
 
     return (
@@ -61,6 +71,7 @@ export const StoreItemHome = (props) => {
 
 export const StoreItemList = (props) => {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
    
     const store = props.store;    
@@ -69,37 +80,16 @@ export const StoreItemList = (props) => {
     const [store_casts, setStore_casts] = useState([]);
 
     const handleStoreDetail = (store_id) => {
+        dispatch(updateDetailStoreId(store_id));
         navigate('/store_detail', { state: { storeId: store_id }});
     }
     
-    const getStore_Casts = async(casts) => {
-        
-        let store_casts_temp = [];
-        let search = "," + store.id + ",";
-        let j = 0;
-        
-        for(let i = 0; i < casts.length; i++){
-
-            if(casts[i]['bar_ids'] != null && casts[i]['bar_ids'].length > 0){
-
-                let index = casts[i]['bar_ids'].indexOf(search);
-                if(index >= 0) {
-                    store_casts_temp[j] = {};
-                    store_casts_temp[j]['id'] = casts[i]['id'];
-                    store_casts_temp[j]['cast_name'] = casts[i]['cast_name'];
-                    store_casts_temp[j]['bars'] = casts[i]['bars'];
-    
-                    j += 1;
-                }
-            }
-        }
-        
-        return Promise.resolve(store_casts_temp);
-    }
     
     useEffect( () => {
         const fetchData = async() => {
-            const results = await getStore_Casts(casts);
+            let search = "," + store.id + ",";
+
+            const results = await casts.filter(cast => cast.bar_ids.include(search));
             setStore_casts(results);
         }              
         
